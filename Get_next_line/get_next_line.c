@@ -1,22 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amahla <amahla@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 12:55:24 by amahla            #+#    #+#             */
+/*   Updated: 2022/05/07 17:56:05 by amahla           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include"get_next_line.h"
 
 char	*ft_str_to_save(char *save)
 {
 	int		i;
 	int		j;
-	int		size;
 	char	*temp;
 
 	j = 0;
 	i = 0;
-	size = 0;
 	while (*(save + i) && *(save + i) != '\n')
 		i++;
 	if (*(save + i) == '\n')
 		i++;
-	while (*(save + i + size))
-		size++;
-	temp = calloc_gnl(size + 1, sizeof(char));
+	temp = calloc_gnl(ft_strlen_gnl(save + i) + 1, sizeof(char));
+	if (!temp)
+		return (NULL);
 	while (*(save + i))
 		*(temp + j++) = *(save + i++);
 	free(save);
@@ -43,6 +53,8 @@ char	*ft_str_to_print(char *save)
 	if (*(save + size) == '\n')
 		size++;
 	line = calloc_gnl(size + 1, sizeof(char));
+	if (!line)
+		return (NULL);
 	while (*(save + i) && *(save + i) != '\n')
 		*(line + j++) = *(save + i++);
 	if (*(save + i) == '\n')
@@ -61,7 +73,7 @@ char	*ft_str_temp(char *save, int fd)
 	char	*buffer;
 
 	rd = 1;
-	buffer = calloc_gnl((BUFFER_SIZE + 1), sizeof(char));
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
 	while (buffer && rd > 0 && !ft_strchr_nl(save))
@@ -72,6 +84,7 @@ char	*ft_str_temp(char *save, int fd)
 			free(buffer);
 			return (NULL);
 		}
+		buffer[rd] = '\0';
 		save = ft_strjoin_gnl(save, buffer);
 	}
 	if (buffer)

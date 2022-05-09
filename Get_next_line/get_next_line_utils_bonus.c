@@ -1,4 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amahla <amahla@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 12:55:53 by amahla            #+#    #+#             */
+/*   Updated: 2022/05/07 20:38:31 by amahla           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include"get_next_line_bonus.h"
+
+int	ft_strchr_nl(char *str)
+{
+	while (str && *str)
+	{
+		if (*str++ == '\n')
+			return (1);
+	}
+	return (0);
+}
 
 int	ft_strlen_gnl(char const *str)
 {
@@ -10,15 +32,6 @@ int	ft_strlen_gnl(char const *str)
 	return (i);
 }
 
-void	ft_bzero_gnl(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && *(str + i))
-		*(str + i++) = '\0';
-}
-
 void	*calloc_gnl(size_t count, size_t size)
 {
 	void	*dst;
@@ -28,12 +41,12 @@ void	*calloc_gnl(size_t count, size_t size)
 	dst = malloc(count * size);
 	if (!dst)
 		return (NULL);
-	while (i < count)
+	while (i < count * size)
 		*((unsigned char *)dst + i++) = 0;
 	return (dst);
 }
 
-char	*ft_strjoin_gnl(char *s1, char *s2, int *y)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	char	*dst;
 	size_t	i;
@@ -47,16 +60,13 @@ char	*ft_strjoin_gnl(char *s1, char *s2, int *y)
 	while (s1 && *(s1 + j))
 		*(dst + i++) = *(s1 + j++);
 	j = 0;
-	while (s2 && *(s2 + j) && *(s2 + j) != '\n')
+	while (s2 && *(s2 + j))
+	{
 		*(dst + i++) = *(s2 + j++);
-	if (*(s2 + j) == '\n')
-		*(dst + i) = *(s2 + j);
+		*(s2 + j - 1) = '\0';
+	}
+	*(dst + i) = '\0';
 	if (s1)
 		free(s1);
-	if (*(s2 + *y) != '\n')
-	{
-		*y = 0;
-		ft_bzero_gnl(s2);
-	}
 	return (dst);
 }
