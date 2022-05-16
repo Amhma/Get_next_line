@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir Result
+
 clang -Wall -Werror -Wextra main_exemple_multi.c
 
 ./a.out 41_no_nl 42_with_nl alternate_line_nl_no_nl big_line_with_nl multiple_line_with_nl 41_with_nl 43_no_nl alternate_line_nl_with_nl empty multiple_nlx5 42_no_nl 43_with_nl big_line_no_nl multiple_line_no_nl nl > Result/file_test_exemple.txt
@@ -56,3 +58,5 @@ else
 fi
 
 echo ""
+
+rm -rf Result
